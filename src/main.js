@@ -1,5 +1,7 @@
 // start server at localhost:8000: "python3 -m http.server"   (in terminal)
 // in blank index. html hit ! and slect the emmit thingy to autofill
+//prof github rndmcnlly
+
 
 console.log("ping");
 
