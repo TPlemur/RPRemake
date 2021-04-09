@@ -6,7 +6,8 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('starfield','assets/starfield.png')
+        this.load.image('starfield','assets/starfield.png');
+        this.load.image('rocket','assets/rocket.png');
     }
 
 
@@ -15,6 +16,11 @@ class Play extends Phaser.Scene {
         //starfield background
         this.starfield = this.add.tileSprite(
             0,0,640,489, 'starfield').setOrigin(0,0);
+
+        //place rocket
+        this.p1Rocket = new Rocket(
+            this, game.config.width/2, 
+            game.config.height -borderUISize - borderPadding, 'rocket');
 
         //green UI background element
         this.add.rectangle(
@@ -29,10 +35,16 @@ class Play extends Phaser.Scene {
     	this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
     	this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
 
+
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.keyboard)
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.keyboard)
+        keyF = this.input.keyboard.addKey(Phaser.Input.keyboard)
+        keyR = this.input.keyboard.addKey(Phaser.Input.keyboard)
     }
 
     update(){
         this.starfield.tilePositionX -=3;
+        this.p1Rocket.update();
     }
 
 
