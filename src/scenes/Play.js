@@ -8,7 +8,7 @@ class Play extends Phaser.Scene {
     preload(){
         this.load.image('starfield','assets/starfield.png');
         this.load.image('rocket','assets/rocket.png');
-        this.load.image('spaceship','assets/spaceship.ping');
+        this.load.image('spaceship','assets/spaceship.png');
     }
 
 
@@ -50,10 +50,10 @@ class Play extends Phaser.Scene {
     	this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
 
 
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.keyboard.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.keyboard.RIGHT);
-        keyF = this.input.keyboard.addKey(Phaser.Input.keyboard.F);
-        keyR = this.input.keyboard.addKey(Phaser.Input.keyboard.R);
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.LEFT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.RIGHT);
+        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.F);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.R);
     }
 
     update(){
