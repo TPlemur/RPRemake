@@ -3,8 +3,6 @@
 //prof github rndmcnlly
 
 
-console.log("ping");
-
 let config= {
     type: Phaser.CANVAS,
     width:640,
