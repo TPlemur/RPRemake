@@ -23,18 +23,18 @@ class Play extends Phaser.Scene {
             this, game.config.width/2, 
             game.config.height -borderUISize - borderPadding, 'rocket');
 
-                    //place ships
+        //place ships
         this.ship1 = new Ship(
-            this, 200, 
-            200, 'spaceship');
+            this, 250, 200, 
+            'spaceship');
 
         this.ship2 = new Ship(
-            this, 400, 
-            400, 'spaceship');
+            this, 400, 150, 
+            'spaceship');
 
          this.ship3 = new Ship(
-            this, 600, 
-            300, 'spaceship');
+            this, 700, 250, 
+            'spaceship');
 
         //green UI background element
         this.add.rectangle(
@@ -50,10 +50,11 @@ class Play extends Phaser.Scene {
     	this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
 
 
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.RIGHT);
-        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.F);
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.R);
+        // define keys
+        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     }
 
     update(){
@@ -62,6 +63,8 @@ class Play extends Phaser.Scene {
         this.ship1.update();
         this.ship2.update();
         this.ship3.update();
+
+
 
         this.checkCollision(this.p1Rocket, this.ship1);
         this.checkCollision(this.p1Rocket, this.ship2);
