@@ -22,20 +22,20 @@ class Play extends Phaser.Scene {
         //place rocket
         this.p1Rocket = new Rocket(
             this, game.config.width/2, 
-            game.config.height -borderUISize - borderPadding, 'rocket');
+            game.config.height -borderUISize - borderPadding, 'rocket').setOrigin(0);
 
         //place ships
         this.ship1 = new Ship(
             this, 250, 200, 
-            'spaceship');
+            'spaceship').setOrigin(0);
 
         this.ship2 = new Ship(
             this, 400, 150, 
-            'spaceship');
+            'spaceship').setOrigin(0);
 
          this.ship3 = new Ship(
             this, 700, 250, 
-            'spaceship');
+            'spaceship').setOrigin(0);
 
         //green UI background element
         this.add.rectangle(
@@ -81,6 +81,13 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
+
+        //gameclock (60s)
+        scoreConfig.fixedWidth = 0;
+        this.clock = this.time.delayedCall(60000,()=>{
+            this.add.text(game.config.width/2, game.config.height/2,'GAME OVER', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
+        }, null, this);
 
     }
 
