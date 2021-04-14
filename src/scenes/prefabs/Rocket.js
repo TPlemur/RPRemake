@@ -2,7 +2,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, leftKey,rightKey,fireKey, frame){
         super(scene, x, y, texture, frame)
         scene.add.existing(this)
-        this.movementSpeed = 2;
+        this.movementSpeed = game.setting.spaceshipSpeed/1.5;
         this.isFiring = false;
         this.sfxRocket = scene.sound.add('sfx_rocket'); //add rocket sfx
         this.fireKey = fireKey;
@@ -25,7 +25,6 @@ class Rocket extends Phaser.GameObjects.Sprite {
         else{
             if(this.leftKey.isDown){
                 this.x -= this.movementSpeed;
-                console.log('ex');
             }
 
             if(this.rightKey.isDown){
