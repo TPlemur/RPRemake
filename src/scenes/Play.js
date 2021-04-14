@@ -6,6 +6,7 @@ class Play extends Phaser.Scene {
     }
 
     preload(){
+        //load sprites
         this.load.image('starfield','assets/starfield.png');
         this.load.image('rocket','assets/rocket.png');
         this.load.image('spaceship','assets/spaceship.png');
@@ -15,6 +16,7 @@ class Play extends Phaser.Scene {
 
 
     create(){
+
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -77,11 +79,7 @@ class Play extends Phaser.Scene {
             framerate: 30
         });
 
-        //var for score
-        this.p1Score = 0;
-        this.p2Score =0;
-
-        //displaying score
+        //score configs
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -94,14 +92,17 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
+
+        //display the scores
         if(game.setting.twoplayer){
             this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p2Rocket.score, scoreConfig);
         }
         this.scoreRight =this.add.text(game.config.width -borderUISize - borderPadding, borderUISize + borderPadding*2, this.p1Rocket.score, scoreConfig).setOrigin(1,0);
+        
         //game end flag
         this.gameOver = false;
 
-        //gameclock (60s)
+        //gameclock
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.setting.gameTimer,()=>{
             this.add.text(game.config.width/2, game.config.height/2,'GAME OVER', scoreConfig).setOrigin(0.5);
@@ -123,11 +124,10 @@ class Play extends Phaser.Scene {
             this.scene.start('menuScene');
         }
 
-        //run ships
+        //run ships and rockets
         if(!this.gameOver){
             this.starfield.tilePositionX -=3;
             this.p1Rocket.update();
-
             this.ship1.update();
             this.ship2.update();
             this.ship3.update();
@@ -136,8 +136,7 @@ class Play extends Phaser.Scene {
             }
         };
 
-
-
+        //handle collsisions 
         this.checkCollision(this.p1Rocket, this.ship1);
         this.checkCollision(this.p1Rocket, this.ship2);
         this.checkCollision(this.p1Rocket, this.ship3);

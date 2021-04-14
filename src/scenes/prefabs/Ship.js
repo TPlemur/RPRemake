@@ -6,6 +6,7 @@ class Ship extends Phaser.GameObjects.Sprite {
         this.points = 5;
     }
 
+    //moves the ship with constant velocity
     update(){
         this.x += this.movementSpeed;
         if(this.x< -this.width){
@@ -13,6 +14,7 @@ class Ship extends Phaser.GameObjects.Sprite {
         }
     }
 
+    //moves ship back to the right side of the screen
     reset() {
         this.x = game.config.width +50;
         this.alpha = 1;

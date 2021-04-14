@@ -12,6 +12,8 @@ class Rocket extends Phaser.GameObjects.Sprite {
     }
 
     update(){
+
+        //lock controls of rocket that has been fired resets rocket if it reaches the top
         if(this.isFiring){
             this.y -= this.movementSpeed;
             if(this.y < borderUISize*2){
@@ -19,6 +21,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
             }
 
         }
+        //scan for inputs, move rocket accordingly or fire the rocket
         else{
             if(this.leftKey.isDown){
                 this.x -= this.movementSpeed;
@@ -34,12 +37,14 @@ class Rocket extends Phaser.GameObjects.Sprite {
                 this.sfxRocket.play();
             }
 
+            //limit rocket to on screen
             this.x =Phaser.Math.Clamp(this.x,
                 borderUISize +borderPadding,
                 game.config.width - borderPadding - borderUISize);
         }
     }
 
+    //places rocket back on bottom row after having been fired
     reset() {
         this.y = game.config.height - borderUISize - borderPadding;
         this.isFiring = false;
