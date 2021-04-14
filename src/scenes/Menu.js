@@ -27,7 +27,7 @@ class Menu extends Phaser.Scene {
 
         //menu text
         this.add.text(game.config.width / 2, borderUISize + borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width / 2, borderUISize + borderPadding*4, 'use <--> arrows to move & (F) to fire', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width / 2, borderUISize + borderPadding*4, 'use <--> arrows to move & /\\ to fire', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
         //removed for testing pruposes this.add.text(game.config.width / 2, game.config.height / 2 + borderUISize + borderPadding, 'Press <- for Novice or -> for Expert', menuConfig).setOrigin(0.5);
@@ -42,12 +42,13 @@ class Menu extends Phaser.Scene {
         //menu options setup
         this.gametime = this.add.text((game.config.width)/5 + borderUISize/2, 
             game.config.height / 2 + borderUISize+ borderPadding*5, 'time\n' + game.setting.gameTimer/1000 + 's',menuConfig).setOrigin(0.5);
-        this.add.text(2*(game.config.width)/5 + borderUISize/2, 
-            game.config.height / 2 + borderUISize+ borderPadding*5, 'players\n1P\n2P',menuConfig).setOrigin(0.5);
+       this.numplays = this.add.text(2*(game.config.width)/5 + borderUISize/2, 
+            game.config.height / 2 + borderUISize+ borderPadding*5, 'players\n1P',menuConfig).setOrigin(0.5);
         this.gamespeed = this.add.text(3*(game.config.width)/5 + borderUISize/2,
             game.config.height / 2 + borderUISize+ borderPadding*5, 'speed\n' + game.setting.spaceshipSpeed,menuConfig).setOrigin(0.5);
         this.add.text(4*(game.config.width)/5 + borderUISize/2,
             game.config.height / 2 + borderUISize+ borderPadding*5, 'play',menuConfig).setOrigin(0.5);
+
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -81,6 +82,16 @@ class Menu extends Phaser.Scene {
                 game.setting.gameTimer +=15000
                 this.gametime.text = 'time\n' + game.setting.gameTimer/1000 + 's';
             }
+            if(this.menuOption == 1){
+                if(game.setting.twoplayer){
+                game.setting.twoplayer = false;
+                this.numplays.text ='players\n1P';
+                }
+                else{
+                    game.setting.twoplayer = true;
+                    this.numplays.text ='players\n2P';  
+                }
+            }
             if(this.menuOption == 2 && game.setting.spaceshipSpeed < 8){
                 game.setting.spaceshipSpeed +=1;
                 this.gamespeed.text = 'speed\n' + game.setting.spaceshipSpeed;
@@ -95,6 +106,16 @@ class Menu extends Phaser.Scene {
             if(this.menuOption == 0 && game.setting.gameTimer > 15000){
                 game.setting.gameTimer -=15000
                 this.gametime.text = 'time\n' + game.setting.gameTimer/1000 + 's';
+            }
+            if(this.menuOption == 1){
+                if(game.setting.twoplayer){
+                game.setting.twoplayer = false;
+                this.numplays.text ='players\n1P';
+                }
+                else{
+                    game.setting.twoplayer = true;
+                    this.numplays.text ='players\n2P';  
+                }
             }
             if(this.menuOption == 2 && game.setting.spaceshipSpeed > 1){
                 game.setting.spaceshipSpeed -=1;

@@ -15,14 +15,34 @@ class Play extends Phaser.Scene {
 
 
     create(){
+        // define keys
+        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+
         //starfield background
         this.starfield = this.add.tileSprite(
             0,0,640,489, 'starfield').setOrigin(0,0);
 
-        //place rocket
+        //place p1 rocket
         this.p1Rocket = new Rocket(
             this, game.config.width/2, 
-            game.config.height -borderUISize - borderPadding, 'rocket').setOrigin(0);
+            game.config.height -borderUISize - borderPadding, 'rocket',keyLEFT,keyRIGHT,keyUP).setOrigin(0);
+
+        //place p2 rocket
+        if(game.setting.twoplayer){
+            this.p2Rocket = new Rocket(
+                this, game.config.width/2, 
+                game.config.height -borderUISize - borderPadding, 'rocket',keyA,keyD,keyW).setOrigin(0);
+        }
 
         //place ships
         this.ship1 = new Ship(
@@ -50,13 +70,6 @@ class Play extends Phaser.Scene {
     	this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
     	this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
 
-
-        // define keys
-        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
         //explosion animation config
         this.anims.create({
             key: 'explode',
@@ -66,6 +79,7 @@ class Play extends Phaser.Scene {
 
         //var for score
         this.p1Score = 0;
+        this.p2Score =0;
 
         //displaying score
         let scoreConfig = {
@@ -80,8 +94,10 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-
+        if(game.setting.twoplayer){
+            this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p2Rocket.score, scoreConfig);
+        }
+        this.scoreRight =this.add.text(game.config.width -borderUISize - borderPadding, borderUISize + borderPadding*2, this.p1Rocket.score, scoreConfig).setOrigin(1,0);
         //game end flag
         this.gameOver = false;
 
@@ -111,9 +127,13 @@ class Play extends Phaser.Scene {
         if(!this.gameOver){
             this.starfield.tilePositionX -=3;
             this.p1Rocket.update();
+
             this.ship1.update();
             this.ship2.update();
             this.ship3.update();
+            if(game.setting.twoplayer){
+                this.p2Rocket.update();
+            }
         };
 
 
@@ -121,12 +141,18 @@ class Play extends Phaser.Scene {
         this.checkCollision(this.p1Rocket, this.ship1);
         this.checkCollision(this.p1Rocket, this.ship2);
         this.checkCollision(this.p1Rocket, this.ship3);
+        if(game.setting.twoplayer){
+            this.checkCollision(this.p2Rocket, this.ship1);
+            this.checkCollision(this.p2Rocket, this.ship2);
+            this.checkCollision(this.p2Rocket, this.ship3);
+        }
+
 
 
     }
 
     //what happens when a ship sollision happens
-    shipExplode(ship){
+    shipExplode(ship,rocket){
         ship.alpha = 0;
 
         let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0,0);
@@ -137,8 +163,11 @@ class Play extends Phaser.Scene {
             boom.destroy();
         });
         this.sound.play('sfx_explosion');
-        this.p1Score += ship.points;
-        this.scoreLeft.text = this.p1Score;
+        rocket.score += ship.points;
+        this.scoreRight.text = this.p1Rocket.score;
+        if(game.setting.twoplayer){
+            this.scoreLeft.text = this.p2Rocket.score;
+        }
     }
 
     //collision checking for ships
@@ -149,7 +178,7 @@ class Play extends Phaser.Scene {
             rocket.height + rocket.y > ship. y){
                 this.alpha = 0; 
                 rocket.reset();
-                this.shipExplode(ship);
+                this.shipExplode(ship,rocket);
             }
 
     }
