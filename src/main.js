@@ -19,4 +19,4 @@ let borderPadding = borderUISize /3;
 
 //vars
 
-let keyLEFT, keyRIGHT, keyF, keyR;
+let keyLEFT, keyRIGHT, keyF, keyR, keyUP, keyDOWN;
