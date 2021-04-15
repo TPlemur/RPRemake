@@ -7,7 +7,7 @@ class Play extends Phaser.Scene {
 
     preload(){
         //load sprites
-        this.load.image('starfield','assets/starfield.png');
+        this.load.image('starfield','assets/starfieldTransBackground.png');
         this.load.image('rocket','assets/rocket.png');
         this.load.image('spaceship','assets/spaceship.png');
         this.load.spritesheet('explosion','./assets/explosion.png',{frameWidth: 64, fameHeight: 32, startFrame: 0, endFrame: 9 });
@@ -33,6 +33,15 @@ class Play extends Phaser.Scene {
         //starfield background
         this.starfield = this.add.tileSprite(
             0,0,640,489, 'starfield').setOrigin(0,0);
+
+        this.starfieldFast = this.add.tileSprite(
+            0,0,640,489, 'starfield').setOrigin(0,0);
+
+        this.starfieldSlow = this.add.tileSprite(
+            0,0,640,489, 'starfield').setOrigin(0,0);
+
+        this.starfieldFast.tilePositionY -= 200;
+        this.starfieldSlow.tilePositionY -= 260;
 
         //place p1 rocket
         this.p1Rocket = new Rocket(
@@ -126,7 +135,13 @@ class Play extends Phaser.Scene {
 
         //run ships and rockets
         if(!this.gameOver){
-            this.starfield.tilePositionX -=3;
+
+            //move starfield backgrounds
+            this.starfield.tilePositionX -= 2 + game.setting.spaceshipSpeed/3;
+            this.starfieldFast.tilePositionX -= 3 + game.setting.spaceshipSpeed/3;
+            this.starfieldSlow.tilePositionX -= 1 + game.setting.spaceshipSpeed/3;
+
+
             this.p1Rocket.update();
             this.ship1.update();
             this.ship2.update();
