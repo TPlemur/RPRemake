@@ -25,6 +25,6 @@ let keyLEFT, keyRIGHT, keyF, keyR, keyUP, keyDOWN, keyW, keyA, keyS, keyD;
 /*Assignement Scorekeeping
 50 Simultaneous two-player mode
 15 New title Screen
-
-
+15 Parallax Starfield
+15 Visible time remaining
 */

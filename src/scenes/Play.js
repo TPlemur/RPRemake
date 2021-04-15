@@ -106,22 +106,33 @@ class Play extends Phaser.Scene {
         if(game.setting.twoplayer){
             this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p2Rocket.score, scoreConfig);
         }
-        this.scoreRight =this.add.text(game.config.width -borderUISize - borderPadding, borderUISize + borderPadding*2, this.p1Rocket.score, scoreConfig).setOrigin(1,0);
+        this.scoreRight = this.add.text(game.config.width -borderUISize - borderPadding, borderUISize + borderPadding*2, this.p1Rocket.score, scoreConfig).setOrigin(1,0);
         
         //game end flag
         this.gameOver = false;
 
         //gameclock
         scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall(game.setting.gameTimer,()=>{
+        this.Clock = this.time.delayedCall(game.setting.gameTimer,()=>{
             this.add.text(game.config.width/2, game.config.height/2,'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
 
+        this.timeLeft = this.add.text(game.config.width/2 , borderUISize + borderPadding*2, 'time:' + this.Clock.getProgress(), scoreConfig).setOrigin(0.5,0);
+        
     }
 
     update(){
+        
+        //update the clock
+        this.timeLeft.text = 
+            Math.trunc(
+            game.setting.gameTimer*(1-this.Clock.getProgress()) //coundown in miliseconds
+            /1000 // coundown in seconds
+            ).toString().padStart(3,"0"); // add zeros to fill width
+            
+
 
         //restart if game over
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
