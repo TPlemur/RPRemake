@@ -104,9 +104,19 @@ class Play extends Phaser.Scene {
 
         //display the scores
         if(game.setting.twoplayer){
-            this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p2Rocket.score, scoreConfig);
+            this.scoreLeft = this.add.text(
+                borderUISize + borderPadding, 
+                borderUISize + borderPadding*2, 
+                this.p2Rocket.score, 
+                scoreConfig
+                );
         }
-        this.scoreRight = this.add.text(game.config.width -borderUISize - borderPadding, borderUISize + borderPadding*2, this.p1Rocket.score, scoreConfig).setOrigin(1,0);
+        this.scoreRight = this.add.text(
+            game.config.width -borderUISize - borderPadding, 
+            borderUISize + borderPadding*2, 
+            this.p1Rocket.score, 
+            scoreConfig
+            ).setOrigin(1,0);
         
         //game end flag
         this.gameOver = false;
@@ -114,12 +124,17 @@ class Play extends Phaser.Scene {
         //gameclock
         scoreConfig.fixedWidth = 0;
         this.Clock = this.time.delayedCall(game.setting.gameTimer,()=>{
+            //end of game display text
             this.add.text(game.config.width/2, game.config.height/2,'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
-            this.gameOver = true;
+            this.gameOver = true; // changes state to stop movement
         }, null, this);
-
-        this.timeLeft = this.add.text(game.config.width/2 , borderUISize + borderPadding*2, 'time:' + this.Clock.getProgress(), scoreConfig).setOrigin(0.5,0);
+        //display text for timer
+        this.timeLeft = this.add.text(
+            game.config.width/2 , 
+            borderUISize + borderPadding*2, 
+            'time:' + this.Clock.getProgress(), 
+            scoreConfig).setOrigin(0.5,0);
         
     }
 
