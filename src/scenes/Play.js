@@ -118,7 +118,7 @@ class Play extends Phaser.Scene {
             borderUISize + borderPadding*2, 
             this.p1Rocket.score, 
             scoreConfig
-            ).setOrigin(1,0);
+        ).setOrigin(1,0);
         
         //game end flag
         this.gameOver = false;
@@ -131,7 +131,6 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press -> to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true; // changes state to stop movement
         }, null, this);
-
 
         //display text for timer
         this.timeLeft = this.add.text(
@@ -233,33 +232,44 @@ class Play extends Phaser.Scene {
             this.scoreLeft.text = this.p2Rocket.score;
         }
 
-        //add time to the clock
-        this.addTime();
+                        //add time to the clock
+                        this.addTime();
     }
 
 
     //adds time to to clock acording to game.setting.timePerHit 
     addTime(){
+        //scoreConfig
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
         //make the base clock time correct
         game.setting.gameTimer = game.setting.gameTimer //base clock time
         - game.setting.gameTimer*this.Clock.getProgress() // subtract off current progress
         + game.setting.timePerHit // add back the new bonus
-        console.log(game.setting.gameTimer);
-        //add 5s to the clock
+        //remove the old clock
+        this.Clock.remove(false);
+        //create new clock with new time
         this.Clock = this.time.delayedCall(
-            game.setting.gameTimer //base clock time
-            //- game.setting.gameTimer*this.Clock.getProgress() // subtract off current progress
-            //+ game.setting.timePerHit // add back the new bonus
+            game.setting.gameTimer
         ,()=>{//end of game display text
             this.add.text(game.config.width/2, game.config.height/2,'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press -> to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press <- for Menu or -> to Restart', scoreConfig).setOrigin(0.5);
             this.gameOver = true; // changes state to stop movement
         }, null, this);
         //make the base clock time correct
         game.setting.gameTimer = game.setting.gameTimer //base clock time
         - game.setting.gameTimer*this.Clock.getProgress() // subtract off current progress
         + game.setting.timePerHit // add back the new bonus
-        console.log(game.setting.gameTimer);
     }
 
 
