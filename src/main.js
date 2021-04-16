@@ -1,8 +1,6 @@
-// start server at localhost:8000: "python3 -m http.server"   (in terminal)
-// in blank index. html hit ! and slect the emmit thingy to autofill
-//prof github rndmcnlly
-
-
+//main.js
+//Declairs global variables, and creates the phaser game object
+//Thomas Price
 
 
 let config= {
@@ -19,7 +17,7 @@ let borderPadding = borderUISize /3;
 
  
 //vars for keys
-let keyLEFT, keyRIGHT, keyF, keyR, keyUP, keyDOWN, keyW, keyA, keyS, keyD;
+let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyW, keyA, keyS, keyD;
 
 
 /*Assignement Scorekeeping
@@ -28,3 +26,9 @@ let keyLEFT, keyRIGHT, keyF, keyR, keyUP, keyDOWN, keyW, keyA, keyS, keyD;
 15 Parallax Starfield
 15 Visible time remaining
 */
+
+
+//Class notes please ignore:
+// start server at localhost:8000: "python3 -m http.server"   (in terminal)
+// in blank index. html hit ! and slect the emmit thingy to autofill
+//prof github rndmcnlly

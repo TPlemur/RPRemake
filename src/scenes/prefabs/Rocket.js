@@ -1,3 +1,7 @@
+//Rocket.js
+//Creates the Rocket class
+//Thomas Price
+
 class Rocket extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, leftKey,rightKey,fireKey, frame){
         super(scene, x, y, texture, frame)

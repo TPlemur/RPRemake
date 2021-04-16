@@ -1,3 +1,7 @@
+//Play.js
+//Creates and populates the playspace
+//Thomas Price
+
 
 class Play extends Phaser.Scene {
     constructor(){
@@ -18,8 +22,6 @@ class Play extends Phaser.Scene {
     create(){
 
         // define keys
-        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -126,7 +128,7 @@ class Play extends Phaser.Scene {
         this.Clock = this.time.delayedCall(game.setting.gameTimer,()=>{
             //end of game display text
             this.add.text(game.config.width/2, game.config.height/2,'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press -> to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true; // changes state to stop movement
         }, null, this);
         //display text for timer
@@ -150,7 +152,7 @@ class Play extends Phaser.Scene {
 
 
         //restart if game over
-        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyRIGHT)){
             this.scene.restart();
         }
 

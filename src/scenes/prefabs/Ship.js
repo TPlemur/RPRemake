@@ -1,3 +1,7 @@
+//Ship.js
+//Creates the enemy Ship class
+//Thomas Price
+
 class Ship extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame){
         super(scene, x, y, texture, frame)

@@ -1,4 +1,6 @@
-
+//Menu.js
+//Creates and populates the Menu scene
+//Thomas Price
 
 class Menu extends Phaser.Scene {
     constructor() {
