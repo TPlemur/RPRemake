@@ -21,12 +21,18 @@ let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyW, keyA, keyS, keyD;
 
 
 /*Assignement Scorekeeping
-50 Simultaneous two-player mode
-15 New title Screen
-15 Parallax Starfield
-15 Visible time remaining
-*/
+30 Simultaneous two-player mode
+10 New title Screen
+10 Parallax Starfield
+10 Visible time remaining
+20 particle emitter explosions
 
+
+target mods:
+20 add time for successfull hits
+20 parabalic rockets
+
+*/
 
 //Class notes please ignore:
 // start server at localhost:8000: "python3 -m http.server"   (in terminal)
