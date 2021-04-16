@@ -35,6 +35,8 @@ class Menu extends Phaser.Scene {
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
 
+        var numOptions =6;
+
         //create game settings
         game.setting = {
             twoplayer: false,
@@ -44,13 +46,15 @@ class Menu extends Phaser.Scene {
         }
 
         //menu changable menu options text
-        this.gametime = this.add.text((game.config.width)/5 + borderUISize/2, 
+        this.gametime = this.add.text((game.config.width)/numOptions + borderUISize/2, 
             game.config.height / 2 + borderUISize+ borderPadding*5, 'time\n' + game.setting.gameTimer/1000 + 's',menuConfig).setOrigin(0.5);
-       this.numplays = this.add.text(2*(game.config.width)/5 + borderUISize/2, 
+        this.numplays = this.add.text(2*(game.config.width)/numOptions + borderUISize/2, 
             game.config.height / 2 + borderUISize+ borderPadding*5, 'players\n1P',menuConfig).setOrigin(0.5);
-        this.gamespeed = this.add.text(3*(game.config.width)/5 + borderUISize/2,
+        this.gamespeed = this.add.text(3*(game.config.width)/numOptions + borderUISize/2,
             game.config.height / 2 + borderUISize+ borderPadding*5, 'speed\n' + game.setting.spaceshipSpeed,menuConfig).setOrigin(0.5);
-        this.add.text(4*(game.config.width)/5 + borderUISize/2,
+        this.bonusTime = this.add.text(4*(game.config.width)/numOptions + borderUISize/2,
+            game.config.height / 2 + borderUISize+ borderPadding*5, 'Bonus\n' + game.setting.timePerHit/1000 + 's',menuConfig).setOrigin(0.5);
+        this.add.text(5*(game.config.width)/numOptions + borderUISize/2,
             game.config.height / 2 + borderUISize+ borderPadding*5, 'play',menuConfig).setOrigin(0.5);
 
 
@@ -62,7 +66,7 @@ class Menu extends Phaser.Scene {
 
         // places the cursor and traks which position it is in
         this.menuOption = 0;
-        this.cursor = this.add.sprite((game.config.width)/5 + borderUISize/2,400,'rocket').setOrigin(0.5);
+        this.cursor = this.add.sprite((game.config.width)/6 + borderUISize/2,400,'rocket').setOrigin(0.5);
 
     }
 
@@ -71,14 +75,14 @@ class Menu extends Phaser.Scene {
         //move cursor left, if there is an option to the left
         if(Phaser.Input.Keyboard.JustDown(keyLEFT) && this.menuOption > 0){
             this.menuOption -=1;
-            this.cursor.x -=game.config.width/5;
+            this.cursor.x -=game.config.width/6;
             this.sound.play('sfx_select');
         }
 
         //move cursor right if there is an option to the right
-        if(Phaser.Input.Keyboard.JustDown(keyRIGHT) && this.menuOption < 3){
+        if(Phaser.Input.Keyboard.JustDown(keyRIGHT) && this.menuOption < 4){
             this.menuOption +=1;
-            this.cursor.x +=game.config.width/5;
+            this.cursor.x +=game.config.width/6;
             this.sound.play('sfx_select');
         }
 
@@ -108,20 +112,30 @@ class Menu extends Phaser.Scene {
                 game.setting.spaceshipSpeed +=1;
                 this.gamespeed.text = 'speed\n' + game.setting.spaceshipSpeed;
             }
+
+            //incriment bonus time
+            if(this.menuOption == 3 && game.setting.timePerHit < 5000){
+                this.sound.play('sfx_select');
+                game.setting.timePerHit +=500;
+                this.bonusTime.text = 'bonus\n' + game.setting.timePerHit/1000+'s';
+            }
+
             //start the game
-            if(this.menuOption == 3){
+            if(this.menuOption == 4){
                 this.sound.play('sfx_select');
                 this.scene.start('playScene');
             }
         }
         //decrement options
         if(Phaser.Input.Keyboard.JustDown(keyDOWN)){
+
             //decrement time
             if(this.menuOption == 0 && game.setting.gameTimer > 15000){
                 game.setting.gameTimer -=15000
                 this.sound.play('sfx_select');
                 this.gametime.text = 'time\n' + game.setting.gameTimer/1000 + 's';
             }
+
             //toggle 2player
             if(this.menuOption == 1){
                 this.sound.play('sfx_select');
@@ -134,14 +148,23 @@ class Menu extends Phaser.Scene {
                     this.numplays.text ='players\n2P';  
                 }
             }
+
             //decrement ship speed
             if(this.menuOption == 2 && game.setting.spaceshipSpeed > 1){
                 this.sound.play('sfx_select');
                 game.setting.spaceshipSpeed -=1;
                 this.gamespeed.text = 'speed\n' + game.setting.spaceshipSpeed;
             }
+
+            //decriment bonus time
+            if(this.menuOption == 3 && game.setting.timePerHit > 0){
+            this.sound.play('sfx_select');
+            game.setting.timePerHit -=500;
+            this.bonusTime.text = 'bonus\n' + game.setting.timePerHit/1000+'s';
+            }
+
             //start the game
-            if(this.menuOption == 3){
+            if(this.menuOption == 4){
                 this.sound.play('sfx_select');
                 this.scene.start('playScene');
             }

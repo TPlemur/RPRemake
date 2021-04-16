@@ -26,10 +26,9 @@ let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyW, keyA, keyS, keyD;
 10 Parallax Starfield
 10 Visible time remaining
 20 particle emitter explosions
-
+20 add time for successfull hits
 
 target mods:
-20 add time for successfull hits
 20 parabalic rockets
 
 */
