@@ -39,7 +39,8 @@ class Menu extends Phaser.Scene {
         game.setting = {
             twoplayer: false,
             spaceshipSpeed: 3,
-            gameTimer: 60000
+            gameTimer: 60000,
+            timePerHit: 2500
         }
 
         //menu changable menu options text

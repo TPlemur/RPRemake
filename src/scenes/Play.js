@@ -225,7 +225,7 @@ class Play extends Phaser.Scene {
             boom.destroy();
         });
 
-        //sound and score
+        //sound and score update
         this.sound.play('sfx_explosion');
         rocket.score += ship.points;
         this.scoreRight.text = this.p1Rocket.score;
@@ -233,16 +233,35 @@ class Play extends Phaser.Scene {
             this.scoreLeft.text = this.p2Rocket.score;
         }
 
+        //add time to the clock
+        this.addTime();
+    }
+
+
+    //adds time to to clock acording to game.setting.timePerHit 
+    addTime(){
+        //make the base clock time correct
+        game.setting.gameTimer = game.setting.gameTimer //base clock time
+        - game.setting.gameTimer*this.Clock.getProgress() // subtract off current progress
+        + game.setting.timePerHit // add back the new bonus
+        console.log(game.setting.gameTimer);
         //add 5s to the clock
-        this.Clock = this.time.delayedCall(game.setting.gameTimer - game.setting.gameTimer*this.Clock.getProgress()+5000,()=>{
-            //end of game display text
+        this.Clock = this.time.delayedCall(
+            game.setting.gameTimer //base clock time
+            //- game.setting.gameTimer*this.Clock.getProgress() // subtract off current progress
+            //+ game.setting.timePerHit // add back the new bonus
+        ,()=>{//end of game display text
             this.add.text(game.config.width/2, game.config.height/2,'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press -> to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true; // changes state to stop movement
         }, null, this);
-        game.setting.gameTimer += 5000;
-
+        //make the base clock time correct
+        game.setting.gameTimer = game.setting.gameTimer //base clock time
+        - game.setting.gameTimer*this.Clock.getProgress() // subtract off current progress
+        + game.setting.timePerHit // add back the new bonus
+        console.log(game.setting.gameTimer);
     }
+
 
     //collision checking for ships
     checkCollision(rocket, ship) {
