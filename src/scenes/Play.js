@@ -131,15 +131,14 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press -> to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true; // changes state to stop movement
         }, null, this);
+
+
         //display text for timer
         this.timeLeft = this.add.text(
             game.config.width/2 , 
             borderUISize + borderPadding*2, 
             'time:' + this.Clock.getProgress(), 
             scoreConfig).setOrigin(0.5,0);
-
-
-
             
         
     }
@@ -233,6 +232,16 @@ class Play extends Phaser.Scene {
         if(game.setting.twoplayer){
             this.scoreLeft.text = this.p2Rocket.score;
         }
+
+        //add 5s to the clock
+        this.Clock = this.time.delayedCall(game.setting.gameTimer - game.setting.gameTimer*this.Clock.getProgress()+5000,()=>{
+            //end of game display text
+            this.add.text(game.config.width/2, game.config.height/2,'GAME OVER', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press -> to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            this.gameOver = true; // changes state to stop movement
+        }, null, this);
+        game.setting.gameTimer += 5000;
+
     }
 
     //collision checking for ships
