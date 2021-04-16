@@ -197,11 +197,11 @@ class Play extends Phaser.Scene {
 
 
 
-    //what happens when a ship sollision happens
-    shipExplode(ship,rocket){
+    //animate the explosion of a ship
+    shipExplode(ship){
         ship.alpha = 0;
 
-        //do the explosion thing
+        //particle effect explosion
         var particles = this.add.particles('exParticle');
         particles.createEmitter({
             alpha: { start: 1, end: 0 },
@@ -215,7 +215,7 @@ class Play extends Phaser.Scene {
             y: ship.y + 20
         });
 
-        //play the animation and reset the objects
+        //play the animation explosion
         let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0,0);
         boom.anims.play('explode');
         boom.on('animationcomplete', ()=>{
@@ -224,14 +224,15 @@ class Play extends Phaser.Scene {
             boom.destroy();
         });
 
-        //sound and score update
-        this.sound.play('sfx_explosion');
+
+    }
+
+    scoreAdd(rocket, ship){
         rocket.score += ship.points;
         this.scoreRight.text = this.p1Rocket.score;
         if(game.setting.twoplayer){
             this.scoreLeft.text = this.p2Rocket.score;
         }
-
     }
 
 
@@ -277,10 +278,13 @@ class Play extends Phaser.Scene {
             rocket.x + rocket.width > ship.x && 
             rocket.y < ship.y + ship.height &&
             rocket.height + rocket.y > ship. y){
+                //what happens when a collision is detected
                 this.alpha = 0; 
                 rocket.reset();
-                this.shipExplode(ship,rocket);
+                this.shipExplode(ship);
+                this.sound.play('sfx_explosion');
                 this.addTime();
+                this.scoreAdd(rocket,ship);
             }
 
     }
