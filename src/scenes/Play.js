@@ -6,7 +6,6 @@
 class Play extends Phaser.Scene {
     constructor(){
         super("playScene")
-        
     }
 
     preload(){
@@ -14,6 +13,7 @@ class Play extends Phaser.Scene {
         this.load.image('starfield','assets/starfieldTransBackground.png');
         this.load.image('rocket','assets/rocket.png');
         this.load.image('spaceship','assets/spaceship.png');
+        this.load.image('exParticle','assets/exparticle.png');
         this.load.spritesheet('explosion','./assets/explosion.png',{frameWidth: 64, fameHeight: 32, startFrame: 0, endFrame: 9 });
     }
 
@@ -137,6 +137,10 @@ class Play extends Phaser.Scene {
             borderUISize + borderPadding*2, 
             'time:' + this.Clock.getProgress(), 
             scoreConfig).setOrigin(0.5,0);
+
+
+
+            
         
     }
 
@@ -193,10 +197,27 @@ class Play extends Phaser.Scene {
 
     }
 
+
+
     //what happens when a ship sollision happens
     shipExplode(ship,rocket){
         ship.alpha = 0;
 
+        //do the explosion thing
+        var particles = this.add.particles('exParticle');
+        particles.createEmitter({
+            alpha: { start: 1, end: 0 },
+            scale: { start: 0.5, end: 3 },
+            //tint: { start: 0xff945e, end: 0xff945e },
+            speed: 30,
+            blendMode: 'ADD',
+            frequency: 5,
+            maxParticles: 5,
+            x: ship.x + 40,
+            y: ship.y + 20
+        });
+
+        //play the animation and reset the objects
         let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0,0);
         boom.anims.play('explode');
         boom.on('animationcomplete', ()=>{
@@ -204,6 +225,8 @@ class Play extends Phaser.Scene {
             ship.alpha =1;
             boom.destroy();
         });
+
+        //sound and score
         this.sound.play('sfx_explosion');
         rocket.score += ship.points;
         this.scoreRight.text = this.p1Rocket.score;
