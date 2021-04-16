@@ -128,7 +128,7 @@ class Play extends Phaser.Scene {
         this.Clock = this.time.delayedCall(game.setting.gameTimer,()=>{
             //end of game display text
             this.add.text(game.config.width/2, game.config.height/2,'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press -> to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press <- for Menu or -> to Restart', scoreConfig).setOrigin(0.5);
             this.gameOver = true; // changes state to stop movement
         }, null, this);
 
@@ -232,8 +232,6 @@ class Play extends Phaser.Scene {
             this.scoreLeft.text = this.p2Rocket.score;
         }
 
-                        //add time to the clock
-                        this.addTime();
     }
 
 
@@ -250,7 +248,7 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
+            fixedWidth: 0
         }
         //make the base clock time correct
         game.setting.gameTimer = game.setting.gameTimer //base clock time
@@ -282,6 +280,7 @@ class Play extends Phaser.Scene {
                 this.alpha = 0; 
                 rocket.reset();
                 this.shipExplode(ship,rocket);
+                this.addTime();
             }
 
     }
