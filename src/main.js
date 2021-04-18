@@ -21,6 +21,7 @@ let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyW, keyA, keyS, keyD;
 
 
 /*Assignement Scorekeeping
+done mods:
 30 Simultaneous two-player mode
 10 New title Screen
 10 Parallax Starfield
