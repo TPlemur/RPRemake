@@ -29,6 +29,9 @@ done mods:
 20 particle emitter explosions
 20 add time for successfull hits
 
+estimated compleation time 6-7 hours, but not closely tracked in any way.
+
+
 target mods:
 20 parabalic rockets
 
